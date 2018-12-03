@@ -1,0 +1,18 @@
+---
+# Playbook for test Sitecore environment (INT_DEV) to be configured with the use of Ansible
+
+#- hosts: all
+#  gather_facts: no
+#  roles:
+#    - win_services
+
+- hosts: solr
+  gather_facts: no
+  tasks:
+    - debug:
+        msg: "Sitecore root: {{ sc_cm_root }}"
+  roles:
+      - { role: dev_sitecore, tags: ['dev_sitecore'] }
+      - { role: dev_mongo, tags: ['dev_mongo'] }
+      - { role: dev_solr, tags: ['dev_solr'] }
+      - { role: filebeat, tags: ['filebeat']}

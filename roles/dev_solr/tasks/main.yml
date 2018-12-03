@@ -1,0 +1,15 @@
+
+- name: Create Download directory
+  win_file:
+    path: '{{ download_dir }}'
+    state: directory
+  check_mode: no
+
+
+- name: 'Download {{ install_name }}'
+  win_get_url:
+    url: '{{ download_url }}/{{ install_name }}'
+    dest: '{{ download_dir }}\{{ install_name }}'
+    timeout: 300
+    force: no
+  check_mode: no

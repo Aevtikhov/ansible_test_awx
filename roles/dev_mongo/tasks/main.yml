@@ -1,0 +1,92 @@
+# Role to install MongoDB to Windows server
+
+- set_fact:
+    download_url: ''
+    download_dir: 'D:\DevOps\Ansible\Download'
+    install_name: 'mongodb-win32-x86_64-2.6.12-signed.msi'
+    mongo_dir: 'D:\mongodb'
+    mongo_data_dir_db: 'D:\mongo_data\db'
+    mongo_data_dir_log: 'D:\mongo_data\log'
+    reboot_required: false
+
+- name: Create Download directory
+  win_file:
+    path: '{{ download_dir }}'
+    state: directory
+  check_mode: no
+
+
+- name: 'Download {{ install_name }}'
+  win_get_url:
+    url: '{{ download_url }}/{{ install_name }}'
+    dest: '{{ download_dir }}\{{ install_name }}'
+    timeout: 300
+    force: no
+  check_mode: no
+
+- name: 'Create {{ mongo_dir }} directory'
+  win_file:
+    path: '{{ mongo_dir }}'
+    state: directory
+  check_mode: no
+
+- name: 'Create {{ mongo_data_dir_db }} directory'
+  win_file:
+      path: '{{ mongo_data_dir_db }}'
+      state: directory
+  check_mode: no
+
+- name: 'Create {{ mongo_data_dir_log }} directory'
+  win_file:
+     path: '{{ mongo_data_dir_log }}'
+     state: directory
+  check_mode: no
+
+- name: Install an Mongo MSI file
+  win_msi:
+     path: '{{ download_dir }}\{{ install_name }}'
+     extra_args: 'INSTALLLOCATION={{ mongo_dir }} ADDLOCAL="all"'
+     wait: yes
+
+#- name: Install an Mongo MSI file
+#  win_package:
+#     path: '{{ download_dir }}\{{ install_name }}'
+#   #  product_id: 'MongoDB'
+#   #  arguments:
+#   #    - '/q'
+#    #   - '/i'
+#    #   - 'INSTALLLOCATION={{ mongo_dir }}'
+#    #   - 'ADDLOCAL="all"'
+#    # state: present
+#    # ensure: present
+
+- name: Check service Mongo
+  win_service:
+      name: MongoDB
+  register: mongo_service
+
+- win_command: '{{ mongo_dir }}\bin\mongod.exe --dbpath {{ mongo_data_dir_db }} --logpath {{ mongo_data_dir_log }}\mongolog.txt --install --serviceName MongoDB'
+  when: mongo_service.exists == False
+
+- name: Started a Mongo service
+  win_service:
+    name: MongoDB
+    state: started
+  register: service_info
+
+- name: Remove Mongo service
+  win_service:
+      name: MongoDB
+      state: absent
+  tags: ['never', 'remove_mongo']
+
+- name: Check all port numbers are accessible from current host
+  win_wait_for:
+    host:
+    port: "{{ item }}"
+    state: started         # Port should be open
+    delay: 0               # No wait before first check (sec)
+    timeout: 3             # Stop checking after timeout (sec)
+  ignore_errors: yes
+  with_items:
+    - 27017

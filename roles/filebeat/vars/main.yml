@@ -1,0 +1,3 @@
+log_uploader_root: '{{ solr_log_uploader_root }}'
+log_remover_root: "{{ log_uploader_root | regex_replace('log-uploader', 'log-remover') }}"
+log_dir: '{{ solr_root }}\apache-solr\logs'

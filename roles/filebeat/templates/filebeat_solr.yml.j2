@@ -1,0 +1,44 @@
+#=========================== Filebeat prospectors =============================
+
+filebeat.prospectors:
+
+# Each - is a prospector. Most options can be set at the prospector level, so
+# you can use different prospectors for various configurations.
+# Below are the prospector specific configurations.
+
+- type: log
+
+  enabled: true
+   
+  paths:
+     - D:\Bitnami\solr-5.1.0-1\apache-solr\logs\solr.txt.*
+  fields:
+       logsource: solr
+       machine_name: {{ machine_name }}
+       env_name: {{ env_name }}
+       role: {{ role }}
+  fields_under_root: true
+#  clean_inactive: 1m
+  exclude_lines: ['^INFO', 'commit{dir']
+  
+  multiline.pattern: '^ERROR'
+  multiline.negate: true
+  multiline.match: after  
+  close_inactive: 10m
+#============================= Filebeat modules ===============================
+
+filebeat.config.modules:
+  # Glob pattern for configuration loading
+  path: ${path.config}/modules.d/*.yml
+
+  # Set to true to enable config reloading
+  reload.enabled: false
+
+  # Period on which files under path should be checked for changes
+  #reload.period: 10s
+
+#----------------------------- Logstash output --------------------------------
+output.logstash:
+  # The Logstash hosts
+  hosts: ["10.229.167.73:5044"]
+

@@ -1,0 +1,50 @@
+
+- name: Install IIS
+  win_feature:
+    name: 
+    - Web-Server
+    - Web-Static-Content
+    - Web-Windows-Auth
+    - Web-ASP
+    - Web-Asp-Net45
+    - Web-Mgmt-Tools
+    - NET-Framework-Features
+    - NET-Framework-45-Features
+    state: present
+  register: win_feature
+  tags: ['install_iis', 'auto']
+
+#- name: reboot
+#  win_reboot:
+#  when: win_feature.reboot_required
+
+#- name: Install PSCX
+#  win_psmodule:
+#        name: Pscx
+#        state: present
+
+- name: Unzip 
+  win_unzip:
+        src: '{{ download_dir }}\{{ archive_name }}'
+        dest: D:\
+  tags: ['unzip_sitecore' , 'auto']
+
+- name: Add apppool  
+  win_iis_webapplication:
+        name: '{{ instance_name }}'
+        site: '{{ instance_name }}'
+        state: present
+        physical_path: '{{ sitecore_instance }}'
+  tags: add_apppool
+ 
+ 
+- name: Create Sitecore site 
+  win_iis_website:
+        name: '{{ instance_name }}'
+        state: started
+        port: 80
+        ip: 127.0.0.1
+        hostname: '{{ instance_name }}'
+        application_pool: '{{ instance_name }}'
+        physical_path: '{{ sitecore_instance }}'
+  tags: create_site
