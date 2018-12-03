@@ -6,7 +6,8 @@
 #  roles:
 #    - win_services
 
-- hosts: all
+- hosts:
+    - all
   gather_facts: no
   tasks:
     - debug:
