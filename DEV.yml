@@ -6,7 +6,7 @@
 #  roles:
 #    - win_services
 
-- hosts: solr
+- hosts: all
   gather_facts: no
   tasks:
     - debug:
