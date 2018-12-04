@@ -2,4 +2,4 @@
   win_file:
     path: C:\Temp\folder\subfolder
     state: directory
-  tag: create_dir
+  tags: create_dir
