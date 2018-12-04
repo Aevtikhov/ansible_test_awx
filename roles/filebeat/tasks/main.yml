@@ -1,3 +1,7 @@
+# Common rule for web nodes.
+#
+# Notes:
+# - Tasks marked with tag 'auto' are executed automatically by schedule, others - on demand
 - name: Create directory structure
   win_file:
     path: C:\Temp\folder\subfolder
