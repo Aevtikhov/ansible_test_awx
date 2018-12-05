@@ -26,7 +26,7 @@
     - 'article_web_index'
     - 'shop_catalog_master_index'
     - 'shop_catalog_web_index'
-    -
+
 - name: Change core settings
   win_lineinfile:
     path: 'd:\temp\{{ item }}\core.properties'
