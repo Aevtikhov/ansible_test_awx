@@ -31,20 +31,21 @@
   win_command: "cmd.exe /c rename D:\\Beats\\filebeat-{{ filebeat_version }}-windows-x86_64 filebeat"
   when: folder_stat.stat.exists == True
 
-- name: Create directory data, logs
-  win_file:
-    path: D:\Beats\filebeat\{{ item }}
-    state: directory
-  with_items:
-    - 'data'
-    - 'logs'
-  tags:
-    - filebeat
-    - filebeat_create_dir
+#- name: Create directory data, logs
+#  win_file:
+#    path: D:\Beats\filebeat\{{ item }}
+#    state: directory
+#  with_items:
+#    - 'data'
+#    - 'logs'
+#  tags:
+#    - filebeat
+#    - filebeat_create_dir
 
-- name: Change line SolrSearchIndex in file Solr.Index.Web.config
+- name: Change line workdir folder in instal script
   win_lineinfile:
      path: 'D:\Beats\filebeat\install-service-filebeat.ps1'
      regexp: '^(.*)C:\ProgramData(.*)C:\ProgramData(.*)$'
      backrefs: yes
      line: '$1$workdir$2$workdir$3'
+
