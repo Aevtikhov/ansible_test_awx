@@ -45,7 +45,7 @@
 - name: Change line workdir folder in instal script
   win_lineinfile:
      path: 'D:\Beats\filebeat\install-service-filebeat.ps1'
-     regexp: '^(.*")C:\ProgramData(".*)$'
+     regexp: '^(.*")C:\\ProgramData(.*)$'
      backrefs: yes
      line: '$1$workdir$2'
 
