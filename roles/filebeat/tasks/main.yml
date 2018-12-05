@@ -2,8 +2,22 @@
 #
 # Notes:
 # - Tasks marked with tag 'auto' are executed automatically by schedule, others - on demand
-- name: Create directory structure
+- name: Create directory structure for Filebeat
   win_file:
-    path: C:\Temp\folder\subfolder
+    path: D:\Beats\
     state: directory
-  tags: create_dir
+  tags:
+    - filebeat
+    - filebeat_create_dir
+
+- name: Download Filebeat
+  win_get_url:
+    url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ filebeat_version }}-windows-x86_64.zip
+    dest: D:\Beats\filebeat-{{ filebeat_version }}-windows-x86_64.zip
+
+- name: Unzip gz log
+  win_unzip:
+    src: D:\Beats\filebeat-{{ filebeat_version }}-windows-x86_64.zip
+    dest: D:\Beats\filebeat
+    recurse: yes
+    delete_archive: yes
