@@ -41,7 +41,7 @@
 - name: Copy new sitecore index to solr folder
   win_copy:
     src: 'd:\temp\{{ item }}'
-    dest: '{{ solr_root }}\apache-solr\solr\{{ item }}'
+    dest: '{{ solr_root }}\apache-solr\solr\'
     remote_src: True
   with_items:
     - 'article_master_index'
