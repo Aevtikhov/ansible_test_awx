@@ -14,12 +14,13 @@
   win_get_url:
     url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ filebeat_version }}-windows-x86_64.zip
     dest: D:\Beats\filebeat-{{ filebeat_version }}-windows-x86_64.zip
+    force: no
 
 - name: Unzip Filebeat
   win_unzip:
     src: D:\Beats\filebeat-{{ filebeat_version }}-windows-x86_64.zip
     dest: D:\Beats\
-    delete_archive: yes
+    #delete_archive: yes
 
 - name: rename the filebeat
   win_command: "cmd.exe /c rename D:\\Beats\\filebeat-{{ filebeat_version }}-windows-x86_64 filebeat"
