@@ -43,3 +43,8 @@
     src: 'd:\temp\{{ item }}\'
     dest: '{{ solr_root }}\apache-solr\solr\'
     remote_src: True
+  with_items:
+    - 'article_master_index'
+    - 'article_web_index'
+    - 'shop_catalog_master_index'
+    - 'shop_catalog_web_index'
