@@ -29,7 +29,7 @@
 
 - name: Create directory data, logs
   win_file:
-    path: D:\Beats\{{ item }}
+    path: D:\Beats\filebeat\{{ item }}
     state: directory
   with_items:
     - 'data'
