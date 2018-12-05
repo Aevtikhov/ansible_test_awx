@@ -6,6 +6,7 @@
   win_copy:
     src: '{{ solr_root }}\apache-solr\solr\sitecore_master_index'
     dest: d:\temp\
+    remote_src: True
 
 - name: Remove folders in data folder
   win_file:
