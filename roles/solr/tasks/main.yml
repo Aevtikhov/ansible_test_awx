@@ -10,5 +10,8 @@
 
 - name: Remove folders in data folder
   win_file:
-    path: d:\temp\sitecore_master_index\data\
+    path: 'd:\temp\sitecore_master_index\data\{{ item }}'
     state: absent
+  with_items:
+    - 'index'
+    - 'tlog'
