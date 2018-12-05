@@ -22,4 +22,30 @@
     delete_archive: yes
 
 - name: rename the filebeat
-  win_command: "cmd.exe /c rename D:\\Beats\\filebeat-{{ filebeat_version }}-windows-x86_64 D:\\Beats\\filebeat"
+  win_command: "cmd.exe /c rename D:\\Beats\\filebeat-{{ filebeat_version }}-windows-x86_64 filebeat"
+
+#- win_shell: D:\Beats\filebeat\ >> c:\somelog.txt
+
+- name: Create directory data, logs
+  win_file:
+    path: D:\Beats\{{ item }}
+    state: directory
+  with_item:
+    - D:\Beats\data
+    - D:\Beats\logs
+  tags:
+    - filebeat
+    - filebeat_create_dir
+
+# - name: Change line SolrSearchIndex in file Solr.Index.Web.config
+#   win_lineinfile:
+#     path: '{{ sc_cd_root }}\Website\App_Config\Include\{{ item }}'
+#     regexp: '^(.*type\s*=\s*")Sitecore.ContentSearch.SolrProvider.SwitchOnRebuildSolrSearchIndex\s*,\s+Sitecore.ContentSearch.SolrProvider(".*)$'
+#     backrefs: yes
+#     line: '$1Sitecore.ContentSearch.SolrProvider.SolrSearchIndex, Sitecore.ContentSearch.SolrProvider$2'
+#  -binaryPathName "`"$workdir\\filebeat.exe`" -c `"$workdir\\filebeat.yml`" -path.home `"$workdir`" -path.data `"$workdir\\data`" -path.logs `"$workdir\\logss`""
+#   with_items:
+#    - Sitecore.ContentSearch.Solr.Index.Web.config
+#   tags:
+#     - never
+#   when: env_name != 'INT'
