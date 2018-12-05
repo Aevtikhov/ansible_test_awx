@@ -32,8 +32,8 @@
     path: D:\Beats\{{ item }}
     state: directory
   with_items:
-    - 'D:\\Beats\\data'
-    - 'D:\\Beats\\logs'
+    - 'D:\Beats\data'
+    - 'D:\Beats\logs'
   tags:
     - filebeat
     - filebeat_create_dir
