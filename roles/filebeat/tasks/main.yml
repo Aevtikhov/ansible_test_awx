@@ -19,5 +19,4 @@
   win_unzip:
     src: D:\Beats\filebeat-{{ filebeat_version }}-windows-x86_64.zip
     dest: D:\Beats\filebeat
-    recurse: yes
     delete_archive: yes
