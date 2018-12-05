@@ -29,7 +29,7 @@
     -
 - name: Change core settings
   win_lineinfile:
-    path: 'd:\temp\{{ item }}\'
+    path: 'd:\temp\{{ item }}\core.properties'
     regexp: '^name='
     line: 'name={{ item }}'
   with_items:
