@@ -15,3 +15,31 @@
   with_items:
     - 'index'
     - 'tlog'
+
+- name: Copy a folder sitecore_master_index to new index
+  win_copy:
+    src: 'd:\temp\sitecore_master_index\'
+    dest: 'd:\temp\{{ item }}\'
+    remote_src: True
+  with_items:
+    - 'article_master_index'
+    - 'article_web_index'
+    - 'shop_catalog_master_index'
+    - 'shop_catalog_web_index'
+    -
+- name: Change core settings
+  win_lineinfile:
+    path: 'd:\temp\{{ item }}\'
+    regexp: '^name='
+    line: 'name={{ item }}'
+  with_items:
+    - 'article_master_index'
+    - 'article_web_index'
+    - 'shop_catalog_master_index'
+    - 'shop_catalog_web_index'
+
+- name: Copy new sitecore index to solr folder
+  win_copy:
+    src: 'd:\temp\{{ item }}\'
+    dest: '{{ solr_root }}\apache-solr\solr\'
+    remote_src: True
