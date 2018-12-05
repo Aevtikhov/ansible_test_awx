@@ -1,0 +1,13 @@
+# Common rule for web nodes.
+#
+# Notes:
+# - Tasks marked with tag 'auto' are executed automatically by schedule, others - on demand
+- name: Copy sitecore_master_index
+  win_copy:
+    src: '{{ solr_root }}\apache-solr\solr\sitecore_master_index'
+    dest: d:\temp\
+
+- name: Remove folders in data folder
+  win_file:
+    path: d:\temp\sitecore_master_index\data\
+    state: absent
