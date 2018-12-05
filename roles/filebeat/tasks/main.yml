@@ -30,7 +30,7 @@
   win_file:
     path: D:\Beats\{{ item }}
     state: directory
-  with_item:
+  with_items:
     - D:\Beats\data
     - D:\Beats\logs
   tags:
