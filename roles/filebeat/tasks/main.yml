@@ -22,4 +22,4 @@
     delete_archive: yes
 
 - name: rename the filebeat
-  win_command: "cmd.exe /c rename D:\Beats\\filebeat-{{ filebeat_version }}-windows-x86_64 filebeat"
+  win_command: "cmd.exe /c rename D:\\Beats\\filebeat-{{ filebeat_version }}-windows-x86_64 D:\\Beats\\filebeat"
