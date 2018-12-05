@@ -21,12 +21,5 @@
     dest: D:\Beats\
     delete_archive: yes
 
-- name: Copy folder Filebeat
-  win_copy:
-    src: D:\Beats\filebeat-{{ filebeat_version }}-windows-x86_64
-    dest: D:\Beats\filebeat
-
-- name: Remove directory structure
-  win_file:
-    path: D:\Beats\filebeat-{{ filebeat_version }}-windows-x86_64
-    state: absent
+- name: rename the filebeat
+  win_command: "cmd.exe /c rename D:\Beats\\filebeat-{{ filebeat_version }}-windows-x86_64 filebeat"
