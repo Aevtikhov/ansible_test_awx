@@ -13,10 +13,10 @@ filebeat.prospectors:
   paths:
      - D:\Bitnami\solr-5.1.0-1\apache-solr\logs\solr.txt.*
   fields:
-       logsource: solr
-       machine_name: {{ machine_name }}
-       env_name: {{ env_name }}
-       role: {{ role }}
+       logsource: {{ solr_logsource }}
+       machine_name: {{ solr_machine_name }}
+       env_name: {{ solr_env_name }}
+       role: {{ solr_role_name }}
   fields_under_root: true
 #  clean_inactive: 1m
   exclude_lines: ['^INFO', 'commit{dir']
@@ -40,5 +40,5 @@ filebeat.config.modules:
 #----------------------------- Logstash output --------------------------------
 output.logstash:
   # The Logstash hosts
-  hosts: ["10.229.167.73:5044"]
+  hosts: ["{{ logstash_ip }}"]
 
