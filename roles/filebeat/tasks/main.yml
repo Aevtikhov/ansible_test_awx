@@ -47,5 +47,5 @@
      path: 'D:\Beats\filebeat\install-service-filebeat.ps1'
      regexp: '^(.*")C:\\ProgramData\\filebeat(.*)C:\\ProgramData\\filebeat(.*)$'
      backrefs: yes
-     line: '$1$workdir\data$2$workdir\logs$3'
+     line: '$1$workdir\data$2$workdir$3'
 
