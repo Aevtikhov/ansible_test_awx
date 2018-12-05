@@ -22,10 +22,14 @@
     dest: D:\Beats\
     #delete_archive: yes
 
+- name: Obtain information about a folder
+  win_stat:
+    path: 'D:\Beats\filebeat'
+  register: folder_stat
+
 - name: rename the filebeat
   win_command: "cmd.exe /c rename D:\\Beats\\filebeat-{{ filebeat_version }}-windows-x86_64 filebeat"
-
-#- win_shell: D:\Beats\filebeat\ >> c:\somelog.txt
+  when: folder_stat.stat.exists == True
 
 - name: Create directory data, logs
   win_file:
@@ -38,15 +42,9 @@
     - filebeat
     - filebeat_create_dir
 
-# - name: Change line SolrSearchIndex in file Solr.Index.Web.config
-#   win_lineinfile:
-#     path: '{{ sc_cd_root }}\Website\App_Config\Include\{{ item }}'
-#     regexp: '^(.*type\s*=\s*")Sitecore.ContentSearch.SolrProvider.SwitchOnRebuildSolrSearchIndex\s*,\s+Sitecore.ContentSearch.SolrProvider(".*)$'
-#     backrefs: yes
-#     line: '$1Sitecore.ContentSearch.SolrProvider.SolrSearchIndex, Sitecore.ContentSearch.SolrProvider$2'
-#  -binaryPathName "`"$workdir\\filebeat.exe`" -c `"$workdir\\filebeat.yml`" -path.home `"$workdir`" -path.data `"$workdir\\data`" -path.logs `"$workdir\\logss`""
-#   with_items:
-#    - Sitecore.ContentSearch.Solr.Index.Web.config
-#   tags:
-#     - never
-#   when: env_name != 'INT'
+- name: Change line SolrSearchIndex in file Solr.Index.Web.config
+  win_lineinfile:
+     path: 'D:\Beats\filebeat\install-service-filebeat.ps1'
+     regexp: '^(.*)C:\ProgramData(.*)C:\ProgramData(.*)$'
+     backrefs: yes
+     line: '$1$workdir$2$workdir$3'

@@ -15,5 +15,5 @@
       #- { role: dev_sitecore, tags: ['dev_sitecore'] }
       #- { role: dev_mongo, tags: ['dev_mongo'] }
       #- { role: dev_solr, tags: ['dev_solr'] }
-      #- { role: filebeat, tags: ['filebeat']}
+      - { role: filebeat, tags: ['filebeat']}
       - { role: solr, tags: ['solr']}
