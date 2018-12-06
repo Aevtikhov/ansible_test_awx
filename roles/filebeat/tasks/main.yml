@@ -58,4 +58,13 @@
     dest: '{{ filebeat_root }}\filebeat.yml'
 
 
+- name: Check if a filebeat is installed
+  win_service:
+    name: filebeat
+  register: service_stat
 
+- name: Start filebeat a service
+  win_service:
+    name: filebeat
+    state: start
+  when: service_stat.stat.exists == True

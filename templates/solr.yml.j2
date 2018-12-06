@@ -11,7 +11,7 @@ filebeat.prospectors:
   enabled: true
    
   paths:
-     - D:\Bitnami\solr-5.1.0-1\apache-solr\logs\solr.txt.*
+     - {{ solr_log_path }}
   fields:
        logsource: {{ solr_logsource }}
        machine_name: {{ solr_machine_name }}
