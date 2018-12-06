@@ -5,7 +5,7 @@
 - name: Copy sitecore_master_index
   win_copy:
     src: '{{ solr_root }}\apache-solr\solr\sitecore_master_index\conf'
-    dest: d:\temp\
+    dest: d:\temp\sitecore_master_index\
     remote_src: True
   tags: never, r11
 
@@ -30,7 +30,7 @@
     path: d:\temp\sitecore_master_index\data
     state: directory
   tags: never, r11
-  
+
 - name: Copy a folder sitecore_master_index to new index
   win_copy:
     src: 'd:\temp\sitecore_master_index\'
