@@ -4,20 +4,33 @@
 # - Tasks marked with tag 'auto' are executed automatically by schedule, others - on demand
 - name: Copy sitecore_master_index
   win_copy:
-    src: '{{ solr_root }}\apache-solr\solr\sitecore_master_index'
+    src: '{{ solr_root }}\apache-solr\solr\sitecore_master_index\conf'
     dest: d:\temp\
     remote_src: True
   tags: never, r11
 
-- name: Remove folders in data folder
-  win_file:
-    path: 'd:\temp\sitecore_master_index\data\{{ item }}'
-    state: absent
-  with_items:
-    - 'index'
-    - 'tlog'
+- name: Copy sitecore_master_index core.properties
+  win_copy:
+    src: '{{ solr_root }}\apache-solr\solr\sitecore_master_index\core.properties'
+    dest: d:\temp\sitecore_master_index\
+    remote_src: True
   tags: never, r11
 
+#- name: Remove folders in data folder
+#  win_file:
+#    path: 'd:\temp\sitecore_master_index\data\{{ item }}'
+#    state: absent
+#  with_items:
+#    - 'index'
+#    - 'tlog'
+#  tags: never, r11,
+
+- name: Create directory data for sitecore_master_index
+  win_file:
+    path: d:\temp\sitecore_master_index\data
+    state: directory
+  tags: never, r11
+  
 - name: Copy a folder sitecore_master_index to new index
   win_copy:
     src: 'd:\temp\sitecore_master_index\'
