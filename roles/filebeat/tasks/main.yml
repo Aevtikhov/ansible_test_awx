@@ -61,5 +61,5 @@
 - name: Start filebeat a service
   win_service:
     name: filebeat
-    state: start
+    state: restarted
   when: service_stat.exists == True
