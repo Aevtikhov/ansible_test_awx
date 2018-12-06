@@ -62,4 +62,4 @@
   win_service:
     name: filebeat
     state: start
-  when: service_stat.stat.exists == True
+  when: service_stat.exists == True
