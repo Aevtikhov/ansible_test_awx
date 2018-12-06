@@ -6,9 +6,7 @@
   win_file:
     path: D:\Beats\
     state: directory
-  tags:
-    - filebeat
-    - filebeat_create_dir
+
 - name: Obtain information about a folder
   win_stat:
     path: '{{ filebeat_root }}'
@@ -38,9 +36,6 @@
   with_items:
     - 'data'
     - 'logs'
-  tags:
-    - filebeat
-    - filebeat_create_dir
 
 - name: Change line workdir folder in instal script
   win_lineinfile:
