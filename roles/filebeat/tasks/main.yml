@@ -52,14 +52,14 @@
     src: 'templates/{{ filebeat_service_name }}.yml.j2'
     dest: '{{ filebeat_root }}\filebeat.yml'
 
-
-- name: Check if a filebeat is installed
-  win_service:
-    name: filebeat
-  register: service_stat
+#
+#- name: Check if a filebeat is installed
+#  win_service:
+#    name: filebeat
+#  register: service_stat
 
 - name: Start filebeat a service
   win_service:
     name: filebeat
-    state: restarted
-  when: service_stat.exists == True
+    state: started
+#  when: service_stat.exists == True
