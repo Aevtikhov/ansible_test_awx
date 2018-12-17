@@ -44,22 +44,23 @@
      backrefs: yes
      line: '$1$workdir\data$2$workdir$3'
 
+- name: Check if a filebeat is installed
+  win_service:
+    name: filebeat
+  register: service_stat
+
 - name: Execute installation script
   win_shell: D:\Beats\filebeat\install-service-filebeat.ps1 >> D:\Beats\filebeat\install.log
+  when: service_stat.exists == False
 
 - name: Copy template filebeat.yml
   win_template:
     src: 'templates/{{ filebeat_service_name }}.yml.j2'
     dest: '{{ filebeat_root }}\filebeat.yml'
-
-#
-#- name: Check if a filebeat is installed
-#  win_service:
-#    name: filebeat
-#  register: service_stat
+  when: service_stat.exists == False
 
 - name: Start filebeat a service
   win_service:
     name: filebeat
     state: started
-#  when: service_stat.exists == True
+  when: service_stat.exists == False
